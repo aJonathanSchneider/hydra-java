@@ -1,3 +1,5 @@
 .idea
 target
 /hydra-java.iml
+**/bin/*
+**/.project
