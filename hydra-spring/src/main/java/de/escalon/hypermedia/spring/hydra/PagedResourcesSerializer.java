@@ -38,7 +38,6 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
 
     private final static Set<String> navigationRels = new HashSet<String>();
 
-
     static {
         Collections.addAll(navigationRels, Link.REL_FIRST, Link.REL_NEXT, Link.REL_PREVIOUS, Link.REL_LAST);
     }
@@ -56,8 +55,7 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
 
     @Override
     public void serialize(PagedResources pagedResources, JsonGenerator jgen, SerializerProvider serializerProvider)
-            throws
-            IOException {
+            throws IOException {
 
         final SerializationConfig config = serializerProvider.getConfig();
         JavaType javaType = config.constructType(pagedResources.getClass());
@@ -66,7 +64,8 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
                 javaType);
 
         // replicate pretty much everything from JacksonHydraSerializer
-        // since we must reorganize the internals of pagedResources to get a hydra collection
+        // since we must reorganize the internals of pagedResources to get a hydra
+        // collection
         // with partial page view, we have to serialize pagedResources with an
         // unwrapping serializer
         Deque<LdContext> contextStack = (Deque<LdContext>) serializerProvider.getAttribute(KEY_LD_CONTEXT);
@@ -75,7 +74,8 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
             serializerProvider.setAttribute(KEY_LD_CONTEXT, contextStack);
         }
 
-        // TODO: filter next/previous/first/last from link list - maybe create new PagedResources without them?
+        // TODO: filter next/previous/first/last from link list - maybe create new
+        // PagedResources without them?
         List<Link> links = pagedResources.getLinks();
         List<Link> filteredLinks = new ArrayList<Link>();
         for (Link link : links) {
@@ -96,10 +96,8 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
 
         jgen.writeStringField(JsonLdKeywords.AT_TYPE, "hydra:Collection");
 
-
         // serialize with PagedResourcesMixin
-        serializer.unwrappingSerializer(NameTransformer.NOP)
-                .serialize(toRender, jgen, serializerProvider);
+        serializer.unwrappingSerializer(NameTransformer.NOP).serialize(toRender, jgen, serializerProvider);
 
         PagedResources.PageMetadata metadata = pagedResources.getMetadata();
         jgen.writeNumberField("hydra:totalItems", metadata.getTotalElements());
@@ -116,7 +114,6 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
         jgen.writeEndObject();
         // end hydra:view
 
-
         jgen.writeEndObject();
 
         contextStack = (Deque<LdContext>) serializerProvider.getAttribute(KEY_LD_CONTEXT);
@@ -126,10 +123,10 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
 
     }
 
-    protected void serializeContext(Object bean, JsonGenerator jgen,
-                                    SerializerProvider serializerProvider, Deque<LdContext> contextStack) throws
-            IOException {
-        // TODO: this code is duplicated from JacksonHydraSerializer, see there for considerations
+    protected void serializeContext(Object bean, JsonGenerator jgen, SerializerProvider serializerProvider,
+            Deque<LdContext> contextStack) throws IOException {
+        // TODO: this code is duplicated from JacksonHydraSerializer, see there for
+        // considerations
         if (proxyUnwrapper != null) {
             bean = proxyUnwrapper.unwrapProxy(bean);
         }
@@ -137,8 +134,9 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
         final Class<?> mixInClass = mixinSource.findMixInClassFor(bean.getClass());
 
         final LdContext parentContext = contextStack.peek();
-        LdContext currentContext = new LdContext(parentContext, ldContextFactory.getVocab(mixinSource, bean,
-                mixInClass), ldContextFactory.getTerms(mixinSource, bean, mixInClass));
+        LdContext currentContext = new LdContext(parentContext,
+                ldContextFactory.getVocab(mixinSource, bean, mixInClass),
+                ldContextFactory.getTerms(mixinSource, bean, mixInClass));
         contextStack.push(currentContext);
         // check if we need to write a context for the current bean at all
         // If it is in the same vocab: no context
@@ -155,15 +153,16 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
             // default context: schema.org vocab or vocab package annotation
             jgen.writeObjectFieldStart("@context");
             // do not repeat vocab if already defined in current context
-            if (parentContext == null || parentContext.vocab == null ||
-                    (currentContext.vocab != null && !currentContext.vocab.equals(parentContext.vocab))) {
-                jgen.writeStringField(JsonLdKeywords.AT_VOCAB, currentContext.vocab);
+            if (parentContext == null || parentContext.vocab == null
+                    || (currentContext.vocab != null && !currentContext.vocab.equals(parentContext.vocab))) {
+                // jgen.writeStringField(JsonLdKeywords.AT_VOCAB, currentContext.vocab);
+                // quick hack:
+                jgen.writeStringField("example", "http://example.com/");
             }
 
             for (Map.Entry<String, Object> termEntry : currentContext.terms.entrySet()) {
                 if (termEntry.getValue() instanceof String) {
-                    jgen.writeStringField(termEntry.getKey(), termEntry.getValue()
-                            .toString());
+                    jgen.writeStringField(termEntry.getKey(), termEntry.getValue().toString());
                 } else {
                     jgen.writeObjectField(termEntry.getKey(), termEntry.getValue());
                 }
@@ -177,8 +176,8 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
         writeRelLink(value, jgen, rel, rel);
     }
 
-    private void writeRelLink(PagedResources value, JsonGenerator jgen, String rel, String hydraPredicate) throws
-            IOException {
+    private void writeRelLink(PagedResources value, JsonGenerator jgen, String rel, String hydraPredicate)
+            throws IOException {
         Link link = value.getLink(rel);
         if (link != null) {
             jgen.writeStringField("hydra:" + hydraPredicate, link.getHref());
@@ -186,4 +185,3 @@ public class PagedResourcesSerializer extends StdSerializer<PagedResources> {
     }
 
 }
-

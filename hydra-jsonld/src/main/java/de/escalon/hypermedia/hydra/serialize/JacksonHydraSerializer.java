@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ser.impl.BeanAsArraySerializer;
 import com.fasterxml.jackson.databind.ser.impl.ObjectIdWriter;
 import com.fasterxml.jackson.databind.ser.std.BeanSerializerBase;
 import com.fasterxml.jackson.databind.util.NameTransformer;
+
+import de.escalon.hypermedia.hydra.mapping.DontExpose;
 import de.escalon.hypermedia.hydra.mapping.Expose;
 
 import java.io.IOException;
@@ -130,6 +132,8 @@ public class JacksonHydraSerializer extends BeanSerializerBase {
         if (proxyUnwrapper != null) {
             bean = proxyUnwrapper.unwrapProxy(bean);
         }
+        final DontExpose dontExpose = findAnnotation(bean.getClass(),DontExpose.class);
+        if(dontExpose != null) return;
         // adds @type attribute, reflecting the simple name of the class or the exposed annotation on the class.
         final Expose classExpose = findAnnotation(bean.getClass(), Expose.class);
         // TODO allow to search up the hierarchy for ResourceSupport mixins and cache found result?

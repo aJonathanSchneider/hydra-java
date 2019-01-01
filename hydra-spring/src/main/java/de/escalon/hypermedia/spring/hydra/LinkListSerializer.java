@@ -22,6 +22,7 @@ import de.escalon.hypermedia.PropertyUtils;
 import de.escalon.hypermedia.action.Cardinality;
 import de.escalon.hypermedia.action.Input;
 import de.escalon.hypermedia.affordance.*;
+import de.escalon.hypermedia.hydra.mapping.DontExpose;
 import de.escalon.hypermedia.hydra.mapping.Expose;
 import de.escalon.hypermedia.hydra.serialize.JacksonHydraSerializer;
 import de.escalon.hypermedia.hydra.serialize.JsonLdKeywords;
@@ -49,6 +50,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
+
+import static de.escalon.hypermedia.AnnotationUtils.findAnnotation;
 
 /**
  * Serializer to convert Link to json-ld representation. Created by dschulten on 19.09.2014.
@@ -396,6 +399,8 @@ public class LinkListSerializer extends StdSerializer<List<Link>> {
             if (writeMethod == null) {
                 continue;
             }
+            final DontExpose dontExpose = findAnnotation(writeMethod,DontExpose.class);
+            if(dontExpose != null) continue;
             // TODO: the property name must be a valid URI - need to check context for terms?
             String propertyName = getWritableExposedPropertyOrPropertyName(propertyDescriptor);
 
