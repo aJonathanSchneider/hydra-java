@@ -3,3 +3,6 @@ target
 /hydra-java.iml
 **/bin/*
 **/.project
+*org.eclipse.*
+settings.json
+**/.classpath

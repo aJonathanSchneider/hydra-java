@@ -9,10 +9,11 @@
   ~ Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>hydra-java</artifactId>
-        <groupId>de.escalon.hypermedia</groupId>
+        <groupId>com.shnyder.forks.hypermedia</groupId>
         <version>0.4.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -23,17 +24,17 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.escalon.hypermedia</groupId>
+            <groupId>com.shnyder.forks.hypermedia</groupId>
             <artifactId>hydra-jsonld</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>de.escalon.hypermedia</groupId>
+            <groupId>com.shnyder.forks.hypermedia</groupId>
             <artifactId>spring-hateoas-ext</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>de.escalon.hypermedia</groupId>
+            <groupId>com.shnyder.forks.hypermedia</groupId>
             <artifactId>spring-hateoas-ext</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
@@ -43,6 +44,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+            <version>0.25.0.RELEASE</version>
         </dependency>
 
         <dependency>

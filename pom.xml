@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <groupId>de.escalon.hypermedia</groupId>
+    <groupId>com.shnyder.forks.hypermedia</groupId>
     <artifactId>hydra-java</artifactId>
     <version>0.4.2-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -98,17 +98,17 @@
                 <version>0.24.0.RELEASE</version>
             </dependency>
             <dependency>
-                <groupId>de.escalon.hypermedia</groupId>
+                <groupId>com.shnyder.forks.hypermedia</groupId>
                 <artifactId>hydra-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>de.escalon.hypermedia</groupId>
+                <groupId>com.shnyder.forks.hypermedia</groupId>
                 <artifactId>hydra-jsonld</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>de.escalon.hypermedia</groupId>
+                <groupId>com.shnyder.forks.hypermedia</groupId>
                 <artifactId>spring-hateoas-ext</artifactId>
                 <version>${project.version}</version>
             </dependency>

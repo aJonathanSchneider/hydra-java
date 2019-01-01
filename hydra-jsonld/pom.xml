@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>de.escalon.hypermedia</groupId>
+        <groupId>com.shnyder.forks.hypermedia</groupId>
         <artifactId>hydra-java</artifactId>
         <version>0.4.2-SNAPSHOT</version>
     </parent>
@@ -28,7 +28,7 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>de.escalon.hypermedia</groupId>
+            <groupId>com.shnyder.forks.hypermedia</groupId>
             <artifactId>hydra-commons</artifactId>
         </dependency>
         <dependency>
